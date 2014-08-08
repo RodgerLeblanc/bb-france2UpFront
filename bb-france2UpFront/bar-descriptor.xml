@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!-- Copyright (c) 2013 BlackBerry Limited. Licensed
+	under the Apache License, Version 2.0 (the "License"); you may not use this
+	file except in compliance with the License. You may obtain a copy of the
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+	applicable law or agreed to in writing, software distributed under the License
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied. See the License for the specific language
+	governing permissions and limitations under the License. -->
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+
+	<!-- BlackBerry 10 application descriptor file. Specifies parameters for
+		identifying, installing, and launching native applications on BlackBerry
+		10. -->
+
+	<!-- A universally unique application identifier. Must be unique across
+		all BlackBerry 10 applications. Using a reverse DNS-style name as the id
+		is recommended. (Eg. com.example.ExampleApplication.) Required. -->
+	<id>com.example.bb_france2UpFront</id>
+
+	<!-- The name that is displayed in the BlackBerry 10 application installer.
+		May have multiple values for each language. See samples or xsd schema file.
+		Optional. -->
+	<name>Blackberry-france UpFront</name>
+
+	<!-- A string value of the format <0-999>.<0-999>.<0-999> that represents
+		application version which can be used to check for application upgrade. Values
+		can also be 1-part or 2-part. It is not necessary to have a 3-part value.
+		An updated version of application must have a versionNumber value higher
+		than the previous version. Required. -->
+	<versionNumber>1.0.0</versionNumber>
+
+	<!-- Fourth digit segment of the package version. First three segments are
+		taken from the <versionNumber> element. Must be an integer from 0 to 2^16-1 -->
+	<buildId>1</buildId>
+
+	<!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents
+		the version of the application, as it should be shown to users. Optional. -->
+	<!-- <versionLabel></versionLabel> -->
+
+	<!-- Description, displayed in the BlackBerry 10 application installer.
+		May have multiple values for each language. See samples or xsd schema file.
+		Optional. -->
+	<description>The Blackberry-france.com connection to UpFront</description>
+
+	<!-- Copyright information. Optional. -->
+	<!-- <copyright></copyright> -->
+
+	<!-- Name of author which is used for signing. Must match the developer
+		name of your development certificate. -->
+	<author>Roger Leblanc</author>
+ <splashScreens>
+    <image>720_720_splash.png</image>
+    <image>720_1280_splash.png</image>
+    <image>768_1280_splash.png</image>
+    <image>1280_720_splash.png</image>
+    <image>1280_768_splash.png</image>
+ </splashScreens>
+ <icon>
+    <image>icon-bby-france.png</image>
+ </icon>
+	<configuration name="Device-Debug">
+		<platformArchitecture>armle-v7</platformArchitecture>
+		<entryPointType>Qnx/Elf</entryPointType>
+
+		<asset entryPointId="bb_france2UpFront" path="arm/o.le-v7-g/bb_france2UpFront"
+			entry="true" type="Qnx/Elf">bb_france2UpFront</asset>
+		<asset entryPointId="bb_france2UpFrontService"
+			path="../bb-france2UpFrontService/arm/bb_france2UpFrontService"
+			type="Qnx/Elf">bb_france2UpFrontService</asset>
+	</configuration>
+
+	<configuration name="Device-Release">
+		<platformArchitecture>armle-v7</platformArchitecture>
+		<entryPointType>Qnx/Cascades</entryPointType>
+
+		<asset entryPointId="bb_france2UpFront" path="arm/o.le-v7/bb_france2UpFront.so"
+			entry="true" type="Qnx/Cascades">bb_france2UpFront.so</asset>
+		<asset entryPointId="bb_france2UpFrontService"
+			path="../bb-france2UpFrontService/arm/bb_france2UpFrontService"
+			type="Qnx/Elf">bb_france2UpFrontService</asset>
+	</configuration>
+
+	<configuration name="Device-Profile">
+		<platformArchitecture>armle-v7</platformArchitecture>
+		<entryPointType>Qnx/Elf</entryPointType>
+
+		<asset entryPointId="bb_france2UpFront" path="arm-p/o.le-v7-g/bb_france2UpFront"
+			entry="true" type="Qnx/Elf">bb_france2UpFront</asset>
+		<asset entryPointId="bb_france2UpFrontService"
+			path="../bb-france2UpFrontService/arm/bb_france2UpFrontService"
+			type="Qnx/Elf">bb_france2UpFrontService</asset>
+	</configuration>
+
+	<configuration name="Simulator-Debug">
+		<platformArchitecture>x86</platformArchitecture>
+		<entryPointType>Qnx/Elf</entryPointType>
+
+		<asset entryPointId="bb_france2UpFront" path="x86/o-g/bb_france2UpFront"
+			entry="true" type="Qnx/Elf">bb_france2UpFront</asset>
+		<asset entryPointId="bb_france2UpFrontService"
+			path="../bb-france2UpFrontService/x86/bb_france2UpFrontService"
+			type="Qnx/Elf">bb_france2UpFrontService</asset>
+	</configuration>
+
+	<entryPoint id="bb_france2UpFront">
+		<name>bb_france2UpFront</name>
+	</entryPoint>
+
+	<entryPoint id="bb_france2UpFrontService">
+		<name>bb_france2UpFront Service</name>
+		<entryPointType>Qnx/Elf</entryPointType>
+	</entryPoint>
+
+	<invoke-target id="com.example.bb_france2UpFrontService">
+		<invoke-target-type>application.headless</invoke-target-type>
+		<invoke-target-name>bb-france2UpFront Service</invoke-target-name>
+		<entry-point-id>bb_france2UpFrontService</entry-point-id>
+		<filter>
+			<action>bb.action.system.STARTED</action>
+			<mime-type>application/vnd.blackberry.system.event.STARTED</mime-type>
+			<property var="uris" value="data://local" />
+		</filter>
+		<filter>
+			<action>com.example.bb_france2UpFrontService.START</action>
+			<mime-type>*</mime-type>
+			<property var="uris" value="headless:" />
+		</filter>
+		<filter>
+			<action>com.example.bb_france2UpFrontService.RESET</action>
+			<mime-type>*</mime-type>
+			<property var="uris" value="headless:" />
+		</filter>
+	</invoke-target>
+
+	<invoke-target id="com.example.bb_france2UpFront">
+		<invoke-target-type>application</invoke-target-type>
+		<invoke-target-name>bb-france2UpFront</invoke-target-name>
+		<icon>
+    		<image>icon-bby-france.png</image>
+		</icon>
+		<entry-point-id>bb_france2UpFront</entry-point-id>
+	</invoke-target>
+
+	<!-- Unique author ID assigned by signing authority. Required if using debug
+		tokens. -->
+	<!-- <authorId>ABC1234YjsnUk235h</authorId> -->
+
+	<initialWindow>
+		<autoOrients>true</autoOrients>
+		<systemChrome>none</systemChrome>
+		<transparent>false</transparent>
+	</initialWindow>
+
+	<!-- The icon for the application, which should be 114x114. -->
+
+	<asset path="assets">assets</asset>
+
+	<!-- Locale support -->
+	<asset path="translations" dest="qm">
+		<include name="*.qm" />
+	</asset>
+ <asset path="C:/Users/Utilisateur/Desktop/BlackBerry Developing/Blog2UpFront/icon-bby-france.png">icon-bby-france.png</asset>
+ <asset path="assets/images/720_720_splash.png">720_720_splash.png</asset>
+ <asset path="assets/images/720_1280_splash.png">720_1280_splash.png</asset>
+ <asset path="assets/images/768_1280_splash.png">768_1280_splash.png</asset>
+ <asset path="assets/images/1280_720_splash.png">1280_720_splash.png</asset>
+ <asset path="assets/images/1280_768_splash.png">1280_768_splash.png</asset>
+
+	<!-- Request permission to run a backend headless process and post notification. -->
+	<permission system="true">_sys_run_headless</permission>
+	<permission system="true">_sys_headless_nostop</permission>
+	<permission>post_notification</permission>
+ <permission>access_internet</permission>
+	<env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib" />
+
+</qnx>
